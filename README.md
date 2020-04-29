@@ -1,6 +1,6 @@
 # simple-vmix-switcher-electron
 
-Simple vMix switcher app built with [ElectronJS](https://electronjs.org). ElectronJS is a cross-platform framework allowing the app to be built for each Windows, Mac or Linux. See the Releases tab for a direct download of the app.
+Simple vMix switcher app built with [ElectronJS](https://electronjs.org). ElectronJS is a cross-platform framework allowing the app to be built for each Windows, Mac or Linux. 
 
 The app is oriented for touch use.
 
@@ -8,7 +8,11 @@ You are free to clone the repository to develop your own app based in this code.
 
 ![Simple vMix Switcher Electron](./readme_assets/overview_030.png "Application overview")
 
-# Feature summary
+## Downloads
+
+See the [Releases](./releases) tab for a direct download of the app for Mac and Windows.
+
+## Feature summary
  - Traditional preview and program row including 'tally' - 8 inputs
  - Shows badges (tally) on input in overlay channel preview/program
  - Long touch on input in program row enables input to be put into an overlay channel
