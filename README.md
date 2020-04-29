@@ -10,7 +10,7 @@ You are free to clone the repository to develop your own app based in this code.
 
 ## Downloads
 
-See the [Releases](./releases) tab for a direct download of the app for Mac and Windows.
+See the [Releases](../../releases) tab for a direct download of the app for Mac and Windows.
 
 ## Feature summary
  - Traditional preview and program row including 'tally' - 8 inputs
