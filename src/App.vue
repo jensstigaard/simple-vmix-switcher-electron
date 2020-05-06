@@ -143,17 +143,16 @@ export default class App extends Vue {
     )
 
     if (this.tallyInfo) {
-      this.tallyInfo.program.forEach((inputInProgram: number) => {
-        if (inputs.length >= inputInProgram) {
+      this.tallyInfo.program
+        .filter((inputInProgram: number) => inputs.length >= inputInProgram)
+        .forEach((inputInProgram: number) => {
           inputs[inputInProgram - 1].program = true
-        }
-      })
-
-      this.tallyInfo.preview.forEach((inputInPreview: number) => {
-        if (inputs.length >= inputInPreview) {
+        })
+      this.tallyInfo.preview
+        .filter((inputInPreview: number) => inputs.length >= inputInPreview)
+        .forEach((inputInPreview: number) => {
           inputs[inputInPreview - 1].preview = true
-        }
-      })
+        })
     }
 
     // Parse overlay channels
