@@ -26,6 +26,10 @@ See the [Releases](../../releases) tab for a direct download of the app for Mac 
    * Easy change of host
    * Auto-complete (Saves list of previous connected hosts)
 
+
+## Known issues
+When running in development mode you can experience loss of connection to the vMix instance after some minutes.
+
 ## Project setup
 ### Install dependencies
 ```
