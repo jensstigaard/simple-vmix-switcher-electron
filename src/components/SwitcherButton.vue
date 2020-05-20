@@ -8,7 +8,7 @@ v-col.ma-1
     v-long-press="500"
     @long-press-start="onLongPressStart"
     @long-press-stop="onLongPressStop"
-  ).px-0
+  ).px-0.elevation-1
     v-col
       v-badge(
         v-if="badgeLeft"
@@ -28,7 +28,17 @@ v-col.ma-1
       )
         big {{ number }}
       div(v-else): big {{ number }}
-      div(style="font-size: 7pt") {{ input.title }}
+      div.switch-button-title-text {{ title }}
+      div
+        div(v-if="hasDuration").switch-button-title-text {{ elapsedText }}
+        div(v-else): p
+
+  v-progress-linear(
+    v-if="hasDuration"
+    :value="position"
+    :height="progressBarHeight"
+    :color="progressBarColor"
+  ).mt-1
 </template>
 
 <script lang="ts">
@@ -37,13 +47,15 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 // @ts-ignore
 import LongPress from 'vue-directive-long-press'
 
+import { durationNice } from '../utility'
+
 @Component({
   directives: {
     'long-press': LongPress
   }
 })
 export default class SwitcherButton extends Vue {
-  @Prop(Object) readonly input!: Object
+  @Prop(Object) readonly input!: { [key: string]: any }
   @Prop(Number) readonly number!: Number
   @Prop(String) readonly backgroundColor!: String
   @Prop(String) readonly badgeLeft!: String
@@ -52,6 +64,14 @@ export default class SwitcherButton extends Vue {
   // For registering long presses
   currentPress: { [key: string]: any } = {
     isLongPress: false
+  }
+
+  get title() {
+    if (this.input.title.length < 24) {
+      return this.input.title
+    }
+
+    return this.input.title.substr(0, 22) + '...'
   }
 
   get style() {
@@ -69,6 +89,33 @@ export default class SwitcherButton extends Vue {
 
   get color() {
     return this.backgroundColor
+  }
+
+  get hasDuration() {
+    return this.input.duration && this.input.duration > 0
+  }
+
+  // Position of video / audio track
+  get position() {
+    return (this.input.position / this.input.duration) * 100
+  }
+
+  get elapsedText() {
+    return `${durationNice(Math.round(this.input.position / 1000))} / ${durationNice(
+      Math.round(this.input.duration / 1000)
+    )}`
+  }
+
+  get playing() {
+    return this.input.state === 'Running'
+  }
+
+  get progressBarColor() {
+    return this.playing ? 'green' : 'grey'
+  }
+
+  get progressBarHeight() {
+    return this.playing ? 5 : 3
   }
 
   onLongPressStart() {
@@ -93,3 +140,9 @@ export default class SwitcherButton extends Vue {
   }
 }
 </script>
+
+<style lang="sass">
+.switch-button-title-text
+  font-size: 8pt
+  letter-spacing: -0.8px
+</style>

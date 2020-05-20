@@ -16,7 +16,7 @@
             // Program row
             program-row(:inputs="switcherInputs" :total-number-of-inputs="inputs.length")
             // Transition progress line
-            v-progress-linear(:value="transitionProgress" height="3").mt-5.mb-3
+            v-progress-linear(:value="transitionProgress" height="3").my-3
             // Preview row
             preview-row(:inputs="switcherInputs" :total-number-of-inputs="inputs.length")
           
@@ -38,7 +38,7 @@ import PreviewRow from './PreviewRow.vue'
 import ProgramRow from './ProgramRow.vue'
 import TransitionButtons from './TransitionButtons.vue'
 
-const FETCH_XML_DATA_INTERVAL: number = 2000 // ms
+const FETCH_XML_DATA_INTERVAL: number = 1500 // ms
 const TRANSITION_STEP: number = 100 // ms
 
 const LIMIT_NUMBER_OF_INPUTS: number = 8
@@ -102,7 +102,12 @@ export default class App extends Vue {
       const xmlContent = XmlApiDataParser.parse(xmlRawData)
 
       const inputs = Object.values(
-        XmlInputMapper.mapInputs(XmlInputMapper.extractInputsFromXML(xmlContent), ['title'])
+        XmlInputMapper.mapInputs(XmlInputMapper.extractInputsFromXML(xmlContent), [
+          'title',
+          'state',
+          'duration',
+          'position'
+        ])
       )
 
       const overlayChannels = XmlOverlayChannels.extract(xmlContent)
@@ -216,9 +221,8 @@ hr
 #connection-status
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5)
 
-
 .rotated-header
-  /* Rotate from top left corner (not default) */
+  // Rotate from top left corner (not default)
   transform-origin: 0 0
   transform: rotate(90deg)
   // letter-spacing: 2px
