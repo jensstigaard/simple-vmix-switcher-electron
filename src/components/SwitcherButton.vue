@@ -33,12 +33,13 @@ v-col.ma-1
         div(v-if="hasDuration").switch-button-title-text {{ elapsedText }}
         div(v-else): p
 
-  v-progress-linear(
-    v-if="hasDuration"
-    :value="position"
-    :height="progressBarHeight"
-    :color="progressBarColor"
-  ).mt-1
+  div.pt-1(style="height:10px")
+    v-progress-linear(
+      v-if="hasDuration"
+      :value="position"
+      :height="progressBarHeight"
+      :color="progressBarColor"
+    )
 </template>
 
 <script lang="ts">
