@@ -13,7 +13,7 @@ div
       @long-click="toggleOverlayChannelsProgram(input, i+1)"
     )
 
-    div(v-if="totalNumberOfInputs > inputs.length").pt-8 + {{ (totalNumberOfInputs - inputs.length) }} input
+    div(v-if="totalNumberOfInputs > inputs.length").pt-8 {{ additionalInputsText }}
 
   // Menu for overlay channel control
   v-menu(v-model="overlayChannelDialog.show")
@@ -132,6 +132,12 @@ export default class ProgramRow extends Vue {
   program(inputNumber: number) {
     // @ts-ignore
     this.execVmixCommands({ Function: 'CutDirect', Input: inputNumber })
+  }
+
+  get additionalInputsText() {
+    const additionalInputs = this.totalNumberOfInputs - this.inputs.length
+    const inputSaying = additionalInputs > 1 ? 'inputs' : 'inputs'
+    return `+ ${additionalInputs} ${inputSaying}`
   }
 }
 </script>
