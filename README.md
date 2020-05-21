@@ -31,9 +31,9 @@ See the [Releases](../../releases) tab for a direct download of the app for Mac 
 When running in development mode you can experience loss of connection to the vMix instance after some minutes.
 
 ## Project setup
-### Install dependencies
+### Install dependencies (based on package.json)
 ```
-yarn install
+yarn
 ```
 
 ### Compiles and hot-reloads for development

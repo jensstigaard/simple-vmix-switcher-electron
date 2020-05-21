@@ -2,7 +2,7 @@
   "name": "simple-vmix-switcher-electron",
   "productName": "Simple vMix Switcher Electron",
   "version": "1.1.0",
-  "private": true,
+  "private": false,
   "author": {
     "name": "Jens Grønhøj Stigaard",
     "email": "jens@stigaard.info"
