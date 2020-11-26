@@ -1,7 +1,7 @@
 export default {
   vMixConnection: {
     host: '127.0.0.1',
-    debug: false
+    debug: false,
   },
 
   previousVmixConnectionHosts: [],
@@ -10,6 +10,6 @@ export default {
     // Swapped
     // false = Program on top
     // true = Preview on top
-    swapped: false
-  }
+    swapped: false,
+  },
 }

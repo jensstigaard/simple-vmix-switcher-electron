@@ -1,4 +1,3 @@
-//
 export function durationNice(duration: number): string {
   const minutes = Math.floor(duration / 60)
 
