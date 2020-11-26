@@ -1,7 +1,9 @@
 'use strict'
 
 import { app, protocol, BrowserWindow, Menu } from 'electron'
-import { createProtocol, installVueDevtools } from 'vue-cli-plugin-electron-builder/lib'
+import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
+import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
+import windowStateKeeper from 'electron-window-state'
 
 // VueX store
 import store from './store'
@@ -14,17 +16,27 @@ let win: BrowserWindow | null
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
-  { scheme: 'app', privileges: { secure: true, standard: true } }
+  { scheme: 'app', privileges: { secure: true, standard: true } },
 ])
 
 function createWindow() {
+  // Remember window state
+  // https://github.com/mawie81/electron-window-state
+  const mainWindowState = windowStateKeeper({
+    defaultWidth: 900,
+    defaultHeight: 400,
+  })
+
   // Create the browser window.
   win = new BrowserWindow({
-    width: 860,
-    height: 380,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+      enableRemoteModule: true,
+    },
   })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -71,7 +83,7 @@ app.on('ready', async () => {
     // If you are not using Windows 10 dark mode, you may uncomment these lines
     // In addition, if the linked issue is closed, you can upgrade electron and uncomment these lines
     try {
-      await installVueDevtools()
+      await installExtension(VUEJS_DEVTOOLS)
     } catch (e) {
       console.error('Vue Devtools failed to install:', e.toString())
     }
@@ -82,7 +94,7 @@ app.on('ready', async () => {
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
   if (process.platform === 'win32') {
-    process.on('message', data => {
+    process.on('message', (data) => {
       if (data === 'graceful-exit') {
         app.quit()
       }
@@ -113,9 +125,9 @@ const template = [
             { role: 'hideothers' },
             { role: 'unhide' },
             { type: 'separator' },
-            { role: 'quit' }
-          ]
-        }
+            { role: 'quit' },
+          ],
+        },
       ]
     : []),
   {
@@ -126,7 +138,7 @@ const template = [
         accelerator: process.platform === 'darwin' ? 'Alt+Cmd+P' : 'Ctrl+Shift+P',
         click: async () => {
           store.dispatch('swapPreviewProgramRows')
-        }
+        },
       },
       { type: 'separator' },
       { role: 'reload' },
@@ -137,9 +149,9 @@ const template = [
       { role: 'zoomin' },
       { role: 'zoomout' },
       { type: 'separator' },
-      { role: 'togglefullscreen' }
-    ]
-  }
+      { role: 'togglefullscreen' },
+    ],
+  },
 ]
 
 // @ts-ignore
