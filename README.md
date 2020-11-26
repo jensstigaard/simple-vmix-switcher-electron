@@ -11,6 +11,10 @@ You are free to clone the repository to develop your own app based in this code.
 ![Simple vMix Switcher Electron](./readme_assets/overview_030.png "Application overview")
 
 ## Downloads
+[For Windows](../../releases/download/v1.2.0/Simple.vMix.Switcher.Electron.Setup.1.2.0.exe)
+
+[For MacOS](../../releases/download/v1.2.0/Simple.vMix.Switcher.Electron-1.2.0.dmg)
+
 
 See the [Releases](../../releases) tab for a direct download of the app for Mac and Windows.
 
