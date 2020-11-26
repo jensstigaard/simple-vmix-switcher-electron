@@ -20,7 +20,8 @@ You are free to clone the repository to develop your own app based in this code.
 See the [Releases](../../releases) tab for a direct download of the app for Mac and Windows.
 
 ## Feature summary
- - Traditional preview and program row including 'tally' - 8 inputs
+ - Traditional preview and program row including 'tally'
+ - Dynamic number of inputs visible based on window width
  - Shows badges (tally) on input in overlay channel preview/program
  - Long touch on input in program row enables input to be put into an overlay channel
  - Shortcut: `Ctrl+Shift+P` (Win+Linux) / `Cmd+Alt+P` (Mac) to swap Preview and Program row order
