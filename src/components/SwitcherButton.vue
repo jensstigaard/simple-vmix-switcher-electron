@@ -1,44 +1,44 @@
 <template lang="pug">
 v-col.ma-1
-  v-btn(
-    block
-    :color="color"
-    :outlined="currentPress.isLongPress"
-    :style="style"
-    v-long-press="500"
-    @long-press-start="onLongPressStart"
-    @long-press-stop="onLongPressStop"
-  ).px-0.elevation-1
+  v-btn.px-0.elevation-1(
+    block,
+    :color='color',
+    :outlined='currentPress.isLongPress',
+    :style='style',
+    v-long-press='500',
+    @long-press-start='onLongPressStart',
+    @long-press-stop='onLongPressStop'
+  )
     v-col
       v-badge(
-        v-if="badgeLeft"
-        :content="badgeLeft"
-        color="orange darken-2"
-        left
-        offset-x="-20"
-        offset-y="-8"
+        v-if='badgeLeft',
+        :content='badgeLeft',
+        color='orange darken-2',
+        left,
+        offset-x='-20',
+        offset-y='-8'
       )
         big {{ number }}
       v-badge(
-        v-else-if="badgeRight"
-        :content="badgeRight"
-        color="blue"
-        offset-x="-20"
-        offset-y="-8"
+        v-else-if='badgeRight',
+        :content='badgeRight',
+        color='blue',
+        offset-x='-20',
+        offset-y='-8'
       )
         big {{ number }}
       div(v-else): big {{ number }}
-      div.switch-button-title-text {{ title }}
+      .switch-button-title-text {{ title }}
       div
-        div(v-if="hasDuration").switch-button-title-text {{ elapsedText }}
+        .switch-button-title-text(v-if='hasDuration') {{ elapsedText }}
         div(v-else): p
 
-  div.pt-1(style="height:10px")
+  .pt-1(style='height: 10px')
     v-progress-linear(
-      v-if="hasDuration"
-      :value="position"
-      :height="progressBarHeight"
-      :color="progressBarColor"
+      v-if='hasDuration',
+      :value='position',
+      :height='progressBarHeight',
+      :color='progressBarColor'
     )
 </template>
 
@@ -52,8 +52,8 @@ import { durationNice } from '../utility'
 
 @Component({
   directives: {
-    'long-press': LongPress
-  }
+    'long-press': LongPress,
+  },
 })
 export default class SwitcherButton extends Vue {
   @Prop(Object) readonly input!: { [key: string]: any }
@@ -64,7 +64,7 @@ export default class SwitcherButton extends Vue {
 
   // For registering long presses
   currentPress: { [key: string]: any } = {
-    isLongPress: false
+    isLongPress: false,
   }
 
   get title() {
@@ -77,7 +77,7 @@ export default class SwitcherButton extends Vue {
 
   get style() {
     const styles: { [key: string]: string } = {
-      height: '66px'
+      height: '66px',
     }
 
     // @ts-ignore
