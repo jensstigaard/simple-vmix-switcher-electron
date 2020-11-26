@@ -1,32 +1,32 @@
 <template lang="pug">
 div
   v-row#preview-row(no-gutters)
-    div.rotated-header Preview
+    .rotated-header Preview
     switcher-button(
-      v-for="(input, i) in inputs" 
-      :key="`preview-row-input-${i}`"
-      :number="i+1"
-      :input="input"
-      :background-color="backgroundColor(input)"
-      :badge-left="badge(input)"
-      @click="preview(i+1)"
-      @long-click="toggleOverlayChannelsPreview(input, i+1)"
+      v-for='(input, i) in inputs',
+      :key='`preview-row-input-${i}`',
+      :number='i + 1',
+      :input='input',
+      :background-color='backgroundColor(input)',
+      :badge-left='badge(input)',
+      @click='preview(i + 1)',
+      @long-click='toggleOverlayChannelsPreview(input, i + 1)'
     )
 
-    div(v-if="totalNumberOfInputs > inputs.length").pt-8 {{ additionalInputsText }}
-  
+    div.pt-7(v-if='totalNumberOfInputs > inputs.length'): small {{ additionalInputsText }}
+
   // Menu for overlay channel control
-  v-menu(v-model="overlayChannelDialog.show")
+  v-menu(v-model='overlayChannelDialog.show')
     v-card: v-card-text
       v-row
         v-btn(
-          v-for="overlayChannel in [1,2,3,4]"
-          :key="`overlay-channel-${overlayChannel}`"
-          @click="activateOverlayChannel(overlayChannel)"
+          v-for='overlayChannel in [1, 2, 3, 4]',
+          :key='`overlay-channel-${overlayChannel}`',
+          @click='activateOverlayChannel(overlayChannel)'
         ) Overlay {{ overlayChannel }}
-        
-        v-btn(icon @click="overlayChannelDialog.show=false").ml-5.mr-3
-          v-icon() fa-times
+
+        v-btn.ml-5.mr-3(icon, @click='overlayChannelDialog.show = false')
+          v-icon fa-times
 </template>
 
 <script lang="ts">
@@ -39,8 +39,8 @@ const IN_OVERLAY_PREVIEW_COLOR = 'orange lighten-3'
 
 @Component({
   components: {
-    SwitcherButton
-  }
+    SwitcherButton,
+  },
 })
 export default class PreviewRow extends Vue {
   @Prop() readonly inputs!: Object[]
@@ -50,7 +50,7 @@ export default class PreviewRow extends Vue {
     input: null,
     // x: 0,
     // y: 0,
-    show: false
+    show: false,
   }
 
   backgroundColor(input: object) {
@@ -97,7 +97,7 @@ export default class PreviewRow extends Vue {
     // )
 
     const commands = overlayChannels.map((channel: string) => ({
-      Function: `OverlayInput${channel}Out`
+      Function: `OverlayInput${channel}Out`,
     }))
 
     // @ts-ignore
@@ -111,7 +111,7 @@ export default class PreviewRow extends Vue {
 
   get additionalInputsText() {
     const additionalInputs = this.totalNumberOfInputs - this.inputs.length
-    const inputSaying = additionalInputs > 1 ? 'inputs' : 'inputs'
+    const inputSaying = additionalInputs > 1 ? 'inputs' : 'input'
     return `+ ${additionalInputs} ${inputSaying}`
   }
 }
