@@ -1,29 +1,31 @@
 <template lang="pug">
-  v-app
-    app-bar
+v-app(v-resize="onResize")
+  app-bar
 
-    v-content
-      v-container(v-if="!$vMixConnection.connected")
-        div.text-center
-          v-icon(color="orange") fa-exclamation-circle
-          div: b Not yet connected to vMix instance...
-          div Please check whether the entered IP address ({{ $store.state.vMixConnection.host }}) is correct...
-      v-container(fluid v-else)
-        div(v-if="!switcherInputs.length") No inputs found...
-        div(v-else)
-          // Preview and program rows
-          div.d-flex(:class="$store.state.previewProgramRows.swapped?'flex-column':'flex-column-reverse'")
-            // Program row
-            program-row(:inputs="switcherInputs" :total-number-of-inputs="inputs.length")
-            // Transition progress line
-            v-progress-linear(:value="transitionProgress" height="3").my-3
-            // Preview row
-            preview-row(:inputs="switcherInputs" :total-number-of-inputs="inputs.length")
-          
-          hr.my-3
-          
-          // Transition buttons
-          transition-buttons(:transitions="transitions" @transition="transition")
+  v-main
+    v-container(v-if='!$vMixConnection.connected')
+      .text-center
+        v-icon(color='orange') fa-exclamation-circle
+        div: b Not yet connected to vMix instance...
+        div Please check whether the entered IP address ({{ $store.state.vMixConnection.host }}) is correct...
+    v-container(v-else, fluid)
+      div(v-if='!switcherInputs.length') No inputs found...
+      div(v-else)
+        // Preview and program rows
+        .d-flex(
+          :class='$store.state.previewProgramRows.swapped ? "flex-column" : "flex-column-reverse"'
+        )
+          // Program row
+          program-row(:inputs='switcherInputs', :total-number-of-inputs='inputs.length')
+          // Transition progress line
+          v-progress-linear.my-3(:value='transitionProgress', height='3')
+          // Preview row
+          preview-row(:inputs='switcherInputs', :total-number-of-inputs='inputs.length')
+
+        hr.my-3
+
+        // Transition buttons
+        transition-buttons(:transitions='transitions', @transition='transition')
 </template>
 
 <script lang="ts">
@@ -41,17 +43,17 @@ import TransitionButtons from './TransitionButtons.vue'
 const FETCH_XML_DATA_INTERVAL: number = 1500 // ms
 const TRANSITION_STEP: number = 100 // ms
 
-const LIMIT_NUMBER_OF_INPUTS: number = 8
+const WIDTH_PER_INPUT: number = 150 // px
 
-const sleep = (m: number) => new Promise(r => setTimeout(r, m))
+const sleep = (m: number) => new Promise((r) => setTimeout(r, m))
 
 @Component({
   components: {
     AppBar,
     TransitionButtons,
     PreviewRow,
-    ProgramRow
-  }
+    ProgramRow,
+  },
 })
 export default class App extends Vue {
   inputs: any[] = []
@@ -62,9 +64,14 @@ export default class App extends Vue {
   xmlDataInterval: any | null = null
   transitionProgress: number = 0
 
+  windowWidth: number = 0
+
   created() {
     // @ts-ignore
     this.setVmixConnection(this.$store.state.vMixConnection.host, { debug: true })
+  }
+  mounted() {
+    this.onResize()
   }
 
   @Watch('$vMixConnection.connected')
@@ -106,7 +113,7 @@ export default class App extends Vue {
           'title',
           'state',
           'duration',
-          'position'
+          'position',
         ])
       )
 
@@ -133,8 +140,16 @@ export default class App extends Vue {
     this.setVmixConnection(newHost, { debug: true })
   }
 
+  onResize() {
+    this.windowWidth = window.innerWidth
+  }
+
+  get numberOfInputsToShow() {
+    return Math.floor(this.windowWidth / WIDTH_PER_INPUT)
+  }
+
   get switcherInputs() {
-    const inputs = JSON.parse(JSON.stringify(this.inputs.slice(0, LIMIT_NUMBER_OF_INPUTS))).map(
+    const inputs = JSON.parse(JSON.stringify(this.inputs.slice(0, this.numberOfInputsToShow))).map(
       (input: any, index: number) => {
         const number = index + 1
 
