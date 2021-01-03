@@ -2,6 +2,7 @@
 
 [![Simple vMix Switcher Electron](https://img.shields.io/github/v/release/jensstigaard/simple-vmix-switcher-electron.svg)](../../releases)
 [![Simple vMix Switcher Electron](https://img.shields.io/github/downloads/jensstigaard/simple-vmix-switcher-electron/total.svg)](../../releases)
+[![Sponsor me - Simple vMix Switcher Electron](https://img.shields.io/badge/paypal-donate-brightgreen.svg)](https://paypal.me/stigaard)
 
 Simple vMix switcher app built with [ElectronJS](https://electronjs.org). ElectronJS is a cross-platform framework allowing the app to be built for each Windows, Mac or Linux. 
 
